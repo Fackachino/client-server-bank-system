@@ -1,3 +1,6 @@
 # Default ignored files
 /shelf/
 .idea/
+*.class
+/client-atm/target/
+/server-bank/target/
