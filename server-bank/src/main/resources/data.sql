@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS Account cascade;
+DROP TABLE IF EXISTS Customer cascade;
+DROP TABLE IF EXISTS Card cascade;
+
 CREATE TABLE Customer(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(255) not null,
