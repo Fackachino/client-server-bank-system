@@ -25,18 +25,18 @@ CREATE TABLE Card(
     FOREIGN KEY (id_account) REFERENCES Account(id)
 );
 
-INSERT INTO Customer(first_name,second_name,patronymic) VALUES
-('Mark','Ivanuk','Lvovich'),
-('Samoylov', 'Igor', 'Alekseevich'),
-('Kiselev', 'Anton', 'Yurievich');
-
-
-INSERT INTO Account(id_customer, account_number, balance) VALUES
-('1', '100001', '2000.00'),
-('2', '100002', '2000.00'),
-('3', '100003', '2000.00');
-
-INSERT INTO Card(id_account, card_number, pin) VALUES
-('1', '5222232132139321', '1111'),
-('2', '5223232108348731', '2222'),
-('3', '5223095139345432', '2222');
+--INSERT INTO Customer(first_name,second_name,patronymic) VALUES
+--('Mark','Ivanuk','Lvovich'),
+--('Igor', 'Samoylov', 'Alekseevich'),
+--('Anton', 'Kiselev', 'Yurievich');
+--
+--
+--INSERT INTO Account(id_customer, account_number, balance) VALUES
+--('1', '100001', '2000.00'),
+--('2', '100002', '2000.00'),
+--('3', '100003', '2000.00');
+--
+--INSERT INTO Card(id_account, card_number, pin) VALUES
+--('1', '5222232132139321', '1111'),
+--('2', '5223232108348731', '2222'),
+--('3', '5223095139345432', '2222');
