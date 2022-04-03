@@ -12,6 +12,14 @@
 
     <artifactId>server-bank</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.samoylov.igor</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

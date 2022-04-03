@@ -24,6 +24,7 @@
     <modules>
         <module>client-atm</module>
         <module>server-bank</module>
+        <module>common</module>
     </modules>
 
     <dependencies>
@@ -31,9 +32,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.3.12.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
