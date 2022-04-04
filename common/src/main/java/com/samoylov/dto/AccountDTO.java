@@ -6,7 +6,6 @@ import java.util.Set;
 
 @Value
 public class AccountDTO {
-    long id;
     long account_number;
     BigDecimal balance;
     Set<CardDTO> cards;
