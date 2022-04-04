@@ -1,4 +1,4 @@
-package com.samoylov.server.dto;
+package com.samoylov.dto;
 
 import lombok.Value;
 
