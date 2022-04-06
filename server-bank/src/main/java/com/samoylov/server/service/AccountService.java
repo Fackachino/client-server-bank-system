@@ -14,4 +14,8 @@ public class AccountService {
     public Optional<Long> getBalanceByCard(long cardNumber, int pin) {
         return accountRepository.getBalanceByCard(cardNumber, pin);
     }
+
+    public Optional<Long> getAccountIdByCard(long cardNumber, int pin){
+        return accountRepository.getAccountIdByCard(cardNumber, pin);
+    }
 }
