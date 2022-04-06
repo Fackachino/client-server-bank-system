@@ -12,4 +12,9 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
             "WHERE c.card_number = :cardNumber and c.pin = :pin")
     Optional<Long> getBalanceByCard(long cardNumber, int pin);
 
+    @Query("SELECT c.id_account FROM Card c " +
+            "WHERE c.card_number = :cardNumber and c.pin = :pin")
+    Optional<Long> getAccountIdByCard(long cardNumber, int pin);
+
+
 }
