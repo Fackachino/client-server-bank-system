@@ -2,7 +2,7 @@ package com.samoylov.server.controller;
 import com.samoylov.dto.CardDTO;
 import com.samoylov.dto.CustomerDTO;
 import com.samoylov.server.service.AccountService;
-import com.samoylov.server.service.CustomerServiceImpl;
+import com.samoylov.server.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class HostRestController {
-    private CustomerServiceImpl customerService;
+    private CustomerService customerService;
     private AccountService accountService;
 
     @GetMapping("customers")
@@ -28,5 +28,13 @@ public class HostRestController {
         return accountService.getBalanceByCard(cardDTO.getCard_number(), cardDTO.getPin())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.INTERNAL_SERVER_ERROR, "Something went Wrong"));
+    }
+
+    @PostMapping("customer/info")
+    CustomerDTO getCustomerByCard(@RequestBody CardDTO cardDTO){
+        return customerService.getCustomerByCard(cardDTO.getCard_number(), cardDTO.getPin())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.INTERNAL_SERVER_ERROR, "Something went Wrong"
+                ));
     }
 }
