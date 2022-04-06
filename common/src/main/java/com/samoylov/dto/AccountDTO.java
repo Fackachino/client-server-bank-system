@@ -1,0 +1,12 @@
+package com.samoylov.dto;
+
+import lombok.Value;
+import java.math.BigDecimal;
+import java.util.Set;
+
+@Value
+public class AccountDTO {
+    long account_number;
+    BigDecimal balance;
+    Set<CardDTO> cards;
+}
