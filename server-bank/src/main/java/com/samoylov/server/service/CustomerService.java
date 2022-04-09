@@ -1,31 +1,28 @@
 package com.samoylov.server.service;
 
-import com.samoylov.dto.AccountDTO;
 import com.samoylov.dto.CardDTO;
 import com.samoylov.dto.CustomerDTO;
-import com.samoylov.server.entity.Account;
-import com.samoylov.server.entity.Card;
 import com.samoylov.server.entity.Customer;
+import com.samoylov.server.exception.CustomerNotFoundException;
 import com.samoylov.server.repository.CustomerRepository;
+import com.samoylov.server.service.utility.CustomerEntityConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class CustomerService {
     private CustomerRepository customerRepository;
+    private CardService cardService;
 
     public Optional<CustomerDTO> getCustomerByID(Long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         Optional<CustomerDTO> customerDTO;
-
-        customerDTO = customerOptional.map(customer -> new CustomerDTO(
-                customer.getFirstName(),
-                customer.getSecondName(),
-                customer.getPatronymic(),
-                getAccountDTOByCustomer(customer)));
+        customerDTO = customerOptional.map(CustomerEntityConverter::convertToDTO);
 
         return customerDTO;
     }
@@ -35,64 +32,20 @@ public class CustomerService {
         Iterable<Customer> customerIterable = customerRepository.findAll();
 
         customerIterable.forEach(
-                customer -> {
-                    customerDTOS.add(getCustomerDTOByCustomer(customer));
-                }
+                customer -> customerDTOS.add(CustomerEntityConverter.convertToDTO(customer))
         );
 
-        return customerDTOS;
+        if (customerDTOS.size() == 0) {
+            throw new CustomerNotFoundException("Customers not found");
+        } else return customerDTOS;
     }
 
-    public Optional<CustomerDTO> getCustomerByCard(long cardNumber, int pin) {
-        Optional<Customer> customerOptional = customerRepository.getCustomerByCard(cardNumber, pin);
-        Optional<CustomerDTO> customerDTO;
+    public CustomerDTO getCustomerByCard(long cardNumber, int pin) {
+        CardDTO cardDTO = cardService.getCard(cardNumber, pin);
+        return customerRepository.getCustomerByCard(cardDTO.getCard_number(), cardDTO.getPin())
+                .map(CustomerEntityConverter::convertToDTO)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
-        customerDTO = customerOptional.map(customer -> new CustomerDTO(
-                customer.getFirstName(),
-                customer.getSecondName(),
-                customer.getPatronymic(),
-                getAccountDTOByCustomer(customer)));
-
-        return customerDTO;
-
-    }
-
-    private CustomerDTO getCustomerDTOByCustomer(Customer customer) {
-        return new CustomerDTO(
-                customer.getFirstName(),
-                customer.getSecondName(),
-                customer.getPatronymic(),
-                getAccountDTOByCustomer(customer));
-    }
-
-    private Set<AccountDTO> getAccountDTOByCustomer(Customer customer) {
-        Set<Account> accountSet = customer.getAccounts();
-        Set<AccountDTO> accountDTOS = new HashSet<>();
-
-        for (Account account : accountSet) {
-            accountDTOS.add(new AccountDTO(
-                    account.getAccount_number(),
-                    account.getBalance(),
-                    getCardDTOByAccount(account)
-            ));
-        }
-
-        return accountDTOS;
-    }
-
-
-    private Set<CardDTO> getCardDTOByAccount(Account account) {
-        Set<Card> cardSet = account.getCards();
-        Set<CardDTO> cardDTOS = new HashSet<>();
-
-        for (Card card : cardSet) {
-            cardDTOS.add(new CardDTO(
-                    card.getCard_number(),
-                    card.getPin()
-            ));
-        }
-
-        return cardDTOS;
     }
 }
 

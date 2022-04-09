@@ -1,10 +1,14 @@
 package com.samoylov.dto;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Set;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AccountDTO {
     long account_number;
     BigDecimal balance;
