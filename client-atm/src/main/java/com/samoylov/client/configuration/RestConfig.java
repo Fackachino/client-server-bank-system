@@ -1,4 +1,5 @@
 package com.samoylov.client.configuration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -6,9 +7,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestConfig {
-
     @Bean
-    public RestTemplate getRestTemplate(){
+    public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
 }

@@ -8,19 +8,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RestController
 @AllArgsConstructor
 public class AtmRestController {
     private ATMService atmService;
 
-    @PostMapping("customer/info")
-    public CustomerDTO getCustomerInfo(@RequestBody CardDTO cardDTO){
+    @PostMapping("customer/infoinfo")
+    public CustomerDTO getCustomerInfo(@RequestBody CardDTO cardDTO) {
         return atmService.getCustomerByCard(cardDTO);
     }
 
     @PostMapping("customer/account/balance")
-    public Long getAccountBalanceByCard(@RequestBody CardDTO cardDTO){
+    public BigDecimal getAccountBalanceByCard(@RequestBody CardDTO cardDTO) {
         return atmService.getAccountBalanceByCard(cardDTO);
     }
-
 }
