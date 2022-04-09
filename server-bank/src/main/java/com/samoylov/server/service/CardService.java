@@ -4,6 +4,7 @@ import com.samoylov.dto.CardDTO;
 import com.samoylov.server.exception.CardNotFoundException;
 import com.samoylov.server.exception.WrongPinException;
 import com.samoylov.server.repository.CardRepository;
+import com.samoylov.server.service.utility.CardEntityConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +13,17 @@ import org.springframework.stereotype.Service;
 public class CardService {
     private CardRepository cardRepository;
 
-    public CardDTO getCardByNumber(long cardNumber) {
+    private CardDTO getCardByNumber(long cardNumber) {
         return cardRepository.getCardByNumber(cardNumber)
-                .map(card -> new CardDTO(
-                        card.getCard_number(),
-                        card.getPin()))
+                .map(CardEntityConverter::convertToDTO)
                 .orElseThrow(() -> new CardNotFoundException("Card not found with number: " + cardNumber));
     }
 
-    public CardDTO getCard(long cardNumber, int pin){
+    public CardDTO getCard(long cardNumber, int pin) {
         CardDTO cardDTO = getCardByNumber(cardNumber);
 
-        if(cardDTO.getPin() != pin){
+        if (cardDTO.getPin() != pin) {
             throw new WrongPinException("Wrong Pin: " + pin);
-        }
-        else return cardDTO;
+        } else return cardDTO;
     }
 }
