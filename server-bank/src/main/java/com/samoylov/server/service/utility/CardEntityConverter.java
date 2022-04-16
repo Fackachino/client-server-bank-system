@@ -6,7 +6,7 @@ import com.samoylov.server.entity.Card;
 public class CardEntityConverter {
     public static CardDTO convertToDTO(Card card) {
         return new CardDTO(
-                card.getCard_number(),
+                card.getCardNumber(),
                 card.getPin()
         );
     }

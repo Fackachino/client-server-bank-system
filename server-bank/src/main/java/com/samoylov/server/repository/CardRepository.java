@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface CardRepository extends CrudRepository<Card, Long> {
     @Query("SELECT c FROM Card c " +
-            "WHERE c.card_number = :cardNumber")
+            "WHERE c.cardNumber = :cardNumber")
     Optional<Card> getCardByNumber(long cardNumber);
-
 }
