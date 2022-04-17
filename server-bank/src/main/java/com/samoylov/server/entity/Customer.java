@@ -1,17 +1,16 @@
 package com.samoylov.server.entity;
 
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "Customer")
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
 public class Customer {
 
     @Id
@@ -28,6 +27,7 @@ public class Customer {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @OneToMany(mappedBy = "id_customer")
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "customer")
     private Set<Account> accounts;
 }

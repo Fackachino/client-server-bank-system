@@ -4,3 +4,4 @@
 *.class
 /client-atm/target/
 /server-bank/target/
+/common/target/

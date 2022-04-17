@@ -1,29 +1,27 @@
 package com.samoylov.server.entity;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Card")
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
 public class Card {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToOne
     @JoinColumn(name = "id_account", nullable = false)
-    private Account id_account;
+    private Account account;
 
     @Column(name = "card_number")
-    private long card_number;
+    private long cardNumber;
 
     @Column(name = "pin")
     private int pin;

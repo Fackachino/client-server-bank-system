@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class AccountEntityConverter {
     public static AccountDTO convertToDto(Account accountEntity) {
         AccountDTO accountDTO = new AccountDTO(
-                accountEntity.getAccount_number(),
+                accountEntity.getAccountNumber(),
                 accountEntity.getBalance(),
                 accountEntity.getCards().stream()
                         .map(CardEntityConverter::convertToDTO)
