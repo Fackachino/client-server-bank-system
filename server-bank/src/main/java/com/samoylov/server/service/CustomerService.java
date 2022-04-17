@@ -40,9 +40,9 @@ public class CustomerService {
         } else return customerDTOS;
     }
 
-    public CustomerDTO getCustomerByCard(long cardNumber, int pin) {
-        CardDTO cardDTO = cardService.getCard(cardNumber, pin);
-        return customerRepository.getCustomerByCard(cardDTO.getCard_number(), cardDTO.getPin())
+    public CustomerDTO getCustomerByCard(String cardNumber) {
+        CardDTO cardDTO = cardService.getCardByNumber(cardNumber);
+        return customerRepository.getCustomerByCard(cardDTO.getCardNumber())
                 .map(CustomerEntityConverter::convertToDTO)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 

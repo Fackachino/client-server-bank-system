@@ -16,15 +16,15 @@ public class AccountService {
     private AccountRepository accountRepository;
     private CardService cardService;
 
-    public BigDecimal getBalanceByCard(long cardNumber, int pin) {
-        return getAccountByCard(cardNumber, pin).getBalance();
+    public BigDecimal getBalanceByCard(String cardNumber) {
+        return getAccountByCard(cardNumber).getBalance();
     }
 
-    public AccountDTO getAccountByCard(long cardNumber, int pin) {
-        CardDTO cardDTO = cardService.getCard(cardNumber, pin);
-        return accountRepository.getAccountByCard(cardDTO.getCard_number(), cardDTO.getPin())
+    public AccountDTO getAccountByCard(String cardNumber) {
+        CardDTO cardDTO = cardService.getCardByNumber(cardNumber);
+        return accountRepository.getAccountByCard(cardDTO.getCardNumber())
                 .map(AccountEntityConverter::convertToDto)
                 .orElseThrow(() -> new AccountNotFoundException(
-                        "Account not found with card: " + cardDTO.getCard_number()));
+                        "Account not found with card: " + cardDTO.getCardNumber()));
     }
 }

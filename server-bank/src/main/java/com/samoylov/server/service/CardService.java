@@ -13,17 +13,9 @@ import org.springframework.stereotype.Service;
 public class CardService {
     private CardRepository cardRepository;
 
-    private CardDTO getCardByNumber(long cardNumber) {
+    public CardDTO getCardByNumber(String cardNumber) {
         return cardRepository.getCardByNumber(cardNumber)
                 .map(CardEntityConverter::convertToDTO)
                 .orElseThrow(() -> new CardNotFoundException("Card not found with number: " + cardNumber));
-    }
-
-    public CardDTO getCard(long cardNumber, int pin) {
-        CardDTO cardDTO = getCardByNumber(cardNumber);
-
-        if (cardDTO.getPin() != pin) {
-            throw new WrongPinException("Wrong Pin: " + pin);
-        } else return cardDTO;
     }
 }
