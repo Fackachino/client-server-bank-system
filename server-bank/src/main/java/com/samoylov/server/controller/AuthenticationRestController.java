@@ -1,6 +1,7 @@
 package com.samoylov.server.controller;
 
 import com.samoylov.dto.CardDTO;
+import com.samoylov.dto.ClientAuthRequest;
 import com.samoylov.server.exception.WrongPinException;
 import com.samoylov.server.security.JwtTokenProvider;
 import com.samoylov.server.service.CardService;
@@ -26,10 +27,10 @@ public class AuthenticationRestController {
     private CardService cardService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody CardDTO cardDTO) {
+    public ResponseEntity login(@RequestBody ClientAuthRequest clientAuthRequest) {
         try {
-            String cardNumber = cardService.getCardByNumber(cardDTO.getCardNumber()).getCardNumber();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(cardNumber, cardDTO.getPin()));
+            String cardNumber = cardService.getCardByNumber(clientAuthRequest.getCardNumber()).getCardNumber();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(cardNumber, clientAuthRequest.getPin()));
             String token = jwtTokenProvider.createToken(cardNumber);
 
             Map<String, String> response = new HashMap<>();
