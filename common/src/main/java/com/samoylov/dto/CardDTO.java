@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CardDTO {
-    long card_number;
-    int pin;
+    String cardNumber;
+    String pin;
 }

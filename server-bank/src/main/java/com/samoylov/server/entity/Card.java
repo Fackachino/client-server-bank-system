@@ -21,9 +21,13 @@ public class Card {
     private Account account;
 
     @Column(name = "card_number")
-    private long cardNumber;
+    private String cardNumber;
 
     @Column(name = "pin")
-    private int pin;
+    private String pin;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 }
 

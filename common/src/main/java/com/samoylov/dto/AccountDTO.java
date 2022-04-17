@@ -10,7 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDTO {
-    long account_number;
+    String accountNumber;
     BigDecimal balance;
     Set<CardDTO> cards;
 }
