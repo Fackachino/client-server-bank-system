@@ -30,8 +30,7 @@ INSERT INTO Customer(first_name,second_name,patronymic) VALUES
 ('Mark','Ivanuk','Lvovich'),
 ('Igor', 'Samoylov', 'Alekseevich'),
 ('Anton', 'Kiselev', 'Yurievich'),
-('Motuzova', 'Diana', 'Vladimirovna');
-
+('Diana', 'Motuzova', 'Vladimirovna');
 
 INSERT INTO Account(id_customer, account_number, balance) VALUES
 ('1', '100001', '3000.00'),

@@ -11,21 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class CustomerService {
     private CustomerRepository customerRepository;
     private CardService cardService;
-
-    public Optional<CustomerDTO> getCustomerByID(Long id) {
-        Optional<Customer> customerOptional = customerRepository.findById(id);
-        Optional<CustomerDTO> customerDTO;
-        customerDTO = customerOptional.map(CustomerEntityConverter::convertToDTO);
-
-        return customerDTO;
-    }
 
     public List<CustomerDTO> getAllCustomers() {
         List<CustomerDTO> customerDTOS = new ArrayList<>();
@@ -48,4 +39,3 @@ public class CustomerService {
 
     }
 }
-
