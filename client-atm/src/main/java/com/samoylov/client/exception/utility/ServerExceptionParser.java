@@ -11,7 +11,6 @@ public class ServerExceptionParser {
         try {
             ObjectNode node = (ObjectNode) new ObjectMapper().readTree(responseBody);
             node.remove("details");
-            System.out.println(node);
             return node;
 
         } catch (JsonProcessingException e) {
