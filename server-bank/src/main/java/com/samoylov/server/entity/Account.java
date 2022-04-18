@@ -24,7 +24,7 @@ public class Account {
     private Customer customer;
 
     @Column(name = "account_number")
-    private long accountNumber;
+    private String accountNumber;
 
     @Column(name = "balance")
     private BigDecimal balance;

@@ -9,10 +9,10 @@ import java.util.Optional;
 public interface AccountRepository extends CrudRepository<Account, Long> {
     @Query("SELECT a FROM Account a " +
             "JOIN Card c ON c.account = a.id " +
-            "WHERE c.cardNumber = :cardNumber and c.pin = :pin")
-    Optional<Account> getAccountByCard(long cardNumber, int pin);
+            "WHERE c.cardNumber = :cardNumber")
+    Optional<Account> getAccountByCard(String cardNumber);
 
     @Query("SELECT c.account FROM Card c " +
-            "WHERE c.cardNumber = :cardNumber and c.pin = :pin")
-    Optional<Long> getAccountIdByCard(long cardNumber, int pin);
+            "WHERE c.cardNumber = :cardNumber")
+    Optional<Long> getAccountIdByCard(String cardNumber);
 }
