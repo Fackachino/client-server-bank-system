@@ -34,6 +34,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(BalanceException.class)
+    public ResponseEntity<?> handleBalanceException(BalanceException exception, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                new Date(),
+                "400",
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<?> handleWrongPinException(AccountNotFoundException exception, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
