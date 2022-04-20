@@ -29,33 +29,33 @@ public class HostRestController {
 
     @GetMapping("/customer")
     CustomerDTO getCustomer(HttpServletRequest request){
-        String cardNumber = getCardNumber(request);
+        String cardNumber = getCardNumberByToken(request);
         CustomerDTO customerDTO = customerService.getCustomerByCard(cardNumber);
         return customerDTO;
     }
 
     @GetMapping("/customer/account/balance")
     BigDecimal getCustomerBalance(HttpServletRequest request){
-        String cardNumber = getCardNumber(request);
+        String cardNumber = getCardNumberByToken(request);
         CardDTO cardDTO = cardService.getCardByNumber(cardNumber);
         return accountService.getBalanceByCard(cardDTO.getCardNumber());
     }
 
     @PostMapping("/customer/account/balance/deposit")
     BigDecimal depositMoney(@RequestBody ClinetMoneyDTO moneyRequest, HttpServletRequest request){
-        String cardNumber = getCardNumber(request);
+        String cardNumber = getCardNumberByToken(request);
         accountService.depositMoney(cardNumber, moneyRequest.getMoney());
         return accountService.getBalanceByCard(cardNumber);
     }
 
     @PostMapping("/customer/account/balance/withdraw")
     BigDecimal withdrawMoney(@RequestBody ClinetMoneyDTO moneyRequest, HttpServletRequest request){
-        String cardNumber = getCardNumber(request);
+        String cardNumber = getCardNumberByToken(request);
         accountService.withDrawMoney(cardNumber, moneyRequest.getMoney());
         return accountService.getBalanceByCard(cardNumber);
     }
 
-    private String getCardNumber(HttpServletRequest request){
+    private String getCardNumberByToken(HttpServletRequest request){
         String token = request.getHeader("authorization").substring(7);
         return jwtTokenProvider.getUsername(token);
     }

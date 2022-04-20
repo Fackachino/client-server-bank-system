@@ -2,6 +2,7 @@ package com.samoylov.server.security;
 
 import com.samoylov.server.security.service.JwtUserDetailsService;
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
     @Autowired
@@ -26,12 +28,12 @@ public class JwtTokenProvider {
     private long validitiInMillisecons;
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
 
-    public String createToken(String username){
+    public String createToken(String username) {
         Claims claims = Jwts.claims().setSubject(username);
         Date date = new Date();
         Date validity = new Date(date.getTime() + validitiInMillisecons);
@@ -53,15 +55,15 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-
             if (claims.getBody().getExpiration().before(new Date())) {
                 return false;
             }
 
             return true;
         } catch (JwtException | IllegalArgumentException e) {
+            log.info("JWT token is expired or invalid for card: " + claims.getBody().getSubject());
             throw new JwtAuthenticationException("JWT token is expired or invalid");
         }
     }
