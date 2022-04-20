@@ -3,6 +3,7 @@ package com.samoylov.server.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class Customer {
     @Column(name = "patronymic")
     private String patronymic;
 
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "customer")
     private Set<Account> accounts;

@@ -3,6 +3,7 @@ package com.samoylov.server.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -29,6 +30,7 @@ public class Account {
     @Column(name = "balance")
     private BigDecimal balance;
 
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "account")
     private Set<Card> cards;

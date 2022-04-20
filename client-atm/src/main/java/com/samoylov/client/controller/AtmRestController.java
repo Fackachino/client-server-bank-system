@@ -3,6 +3,7 @@ package com.samoylov.client.controller;
 import com.samoylov.client.service.ATMService;
 import com.samoylov.client.service.AuthService;
 import com.samoylov.dto.ClientAuthRequest;
+import com.samoylov.dto.ClinetMoneyDTO;
 import com.samoylov.dto.CustomerDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,4 +38,15 @@ public class AtmRestController {
     public String login(@RequestBody ClientAuthRequest clientAuthRequest) {
         return authService.authentication(clientAuthRequest);
     }
+
+    @PostMapping("/customer/account/balance/deposit")
+    public BigDecimal deposit(@RequestBody ClinetMoneyDTO moneyDTO) {
+        return atmService.depositMoney(moneyDTO);
+    }
+
+    @PostMapping("/customer/account/balance/withdraw")
+    public BigDecimal withdraw(@RequestBody ClinetMoneyDTO moneyDTO) {
+        return atmService.withDraw(moneyDTO);
+    }
+
 }
