@@ -8,11 +8,12 @@ import com.samoylov.server.exception.BalanceException;
 import com.samoylov.server.repository.AccountRepository;
 import com.samoylov.server.service.utility.AccountEntityConverter;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class AccountService {
@@ -20,7 +21,9 @@ public class AccountService {
     private CardService cardService;
 
     public BigDecimal getBalanceByCard(String cardNumber) {
-        return getAccountByCard(cardNumber).getBalance();
+        BigDecimal balance = getAccountByCard(cardNumber).getBalance();
+        log.info("card: " + cardNumber + " balance: " + balance );
+        return balance;
     }
 
     public AccountDTO getAccountByCard(String cardNumber) {
@@ -32,6 +35,7 @@ public class AccountService {
         Account account = getAccount(cardNumber);
         account.setBalance(account.getBalance().add(money));
         accountRepository.save(account);
+        log.info("Successfully deposit on card: " + cardNumber + " for the amount of " + money);
         return account.getBalance();
     }
 
@@ -40,10 +44,12 @@ public class AccountService {
 
         BigDecimal balance = account.getBalance();
         if (balance.compareTo(money) < 0) {
+            log.info("Failed withdraw: " + money + " from card: " + cardNumber );
             throw new BalanceException("Not enough money to withdraw");
         }
 
         account.setBalance(account.getBalance().subtract(money));
+        log.info("Successfully withdrawn : " + money + " from the card: " + cardNumber);
         accountRepository.save(account);
         return account.getBalance();
     }

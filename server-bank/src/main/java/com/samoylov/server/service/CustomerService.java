@@ -7,11 +7,14 @@ import com.samoylov.server.exception.CustomerNotFoundException;
 import com.samoylov.server.repository.CustomerRepository;
 import com.samoylov.server.service.utility.CustomerEntityConverter;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class CustomerService {
@@ -27,15 +30,18 @@ public class CustomerService {
         );
 
         if (customerDTOS.size() == 0) {
+            log.info("Customers in DB not found");
             throw new CustomerNotFoundException("Customers not found");
         } else return customerDTOS;
     }
 
     public CustomerDTO getCustomerByCard(String cardNumber) {
         CardDTO cardDTO = cardService.getCardByNumber(cardNumber);
-        return customerRepository.getCustomerByCard(cardDTO.getCardNumber())
-                .map(CustomerEntityConverter::convertToDTO)
-                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        Optional<Customer> customer = customerRepository.getCustomerByCard(cardDTO.getCardNumber());
+        if (!customer.isPresent()) {
+            log.info("Customer with card: " + cardNumber + " not found");
+            throw new CustomerNotFoundException("Customer not found");
+        } else return customer.map(CustomerEntityConverter::convertToDTO).get();
 
     }
 }
